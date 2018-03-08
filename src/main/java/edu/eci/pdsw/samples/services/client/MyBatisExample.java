@@ -18,6 +18,11 @@ package edu.eci.pdsw.samples.services.client;
 
 
 
+import edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.pdsw.sampleprj.dao.mybatis.mappers.TipoItemMapper;
+import edu.eci.pdsw.samples.entities.Item;
+import edu.eci.pdsw.samples.entities.TipoItem;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -61,20 +66,33 @@ public class MyBatisExample {
         SqlSessionFactory sessionfact = getSqlSessionFactory();
 
         SqlSession sqlss = sessionfact.openSession();
-
         
-        //Crear el mapper y usarlo: 
-        //ClienteMapper cm=sqlss.getMapper(ClienteMapper.class)
-        //cm...
+        //Crear el mapper y usarlo:
+        
+        //ClienteMapper
+        ClienteMapper cm = sqlss.getMapper(ClienteMapper.class);
+        System.out.println(cm.consultarClientes());
+        System.out.println(cm.consultarCliente(2104835));
+        //cm.agregarItemRentadoACliente(1026585665, 1000,  java.sql.Date.valueOf("2017-03-30"),  java.sql.Date.valueOf("2017-04-05"));
+        System.out.println(cm.consultarCliente(1026585665));
+        
+        //ItemMapper
+        ItemMapper im = sqlss.getMapper(ItemMapper.class);
+        //im.insertarItem(new Item(new TipoItem(2,"Juego"), 2445574, "GoIO", "Juego multijugador cooperativo estilo steampunk", java.sql.Date.valueOf("2012-08-20"), 100, "DVD", "Simulacion"));
+        System.out.println(im.consultarItem(2445574));
+        System.out.println(im.consultarItems());
         
         
+        //TipoItemMapper
+        TipoItemMapper tim = sqlss.getMapper(TipoItemMapper.class);
+        //tim.addTipoItem("Instalacion");
+        System.out.println(tim.getTipoItem(2));
+        System.out.println(tim.getTiposItems());
         
         sqlss.commit();
-        
-        
+                
         sqlss.close();
 
-        
         
     }
 
